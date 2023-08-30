@@ -7,22 +7,22 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 @Data
-public class FakeAPIDataResponse {
+public class FakeAPIProductsResponse {
 
+    private Long id;
     @JsonProperty("title")
     private String title;
-    @JsonProperty("price")
-    private BigDecimal price;
     @JsonProperty("description")
     private String description;
+    @JsonProperty("price")
+    private BigDecimal price;
     @JsonProperty("image")
     private String image;
     @JsonProperty("category")
     private String category;
 
-
     @JsonCreator
-    public FakeAPIDataResponse(String title, BigDecimal price, String description, String image, String category) {
+    public FakeAPIProductsResponse(String title, BigDecimal price, String description, String image, String category) {
         this.title = title;
         this.price = price;
         this.description = description;
