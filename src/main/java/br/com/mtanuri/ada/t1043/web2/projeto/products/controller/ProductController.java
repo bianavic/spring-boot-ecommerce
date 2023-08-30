@@ -26,7 +26,7 @@ import java.util.Collections;
 import java.util.List;
 
 
-@Tag(name = "Product Api", description = "This service is responsible for managing products. A user can create and list products")
+@Tag(name = "Product Api", description = "This service is responsible for managing products. A user can add and list products")
 @RestController
 @RequestMapping("/products")
 @RequiredArgsConstructor
@@ -38,7 +38,6 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @PostMapping(consumes="application/json")
     @Operation(
             summary = "Add a new product",
             tags = {"product", "post"})
@@ -48,6 +47,7 @@ public class ProductController {
 //            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
 //            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})
             })
+    @PostMapping(consumes="application/json")
     public ResponseEntity<Product> saveUser(@RequestBody @Valid ProductDTO newProduct) {
 
         Product product = productService.save(newProduct);
@@ -61,7 +61,7 @@ public class ProductController {
     // TODO fix get methods exposed to swagger configuration
     @Operation(
             summary = "Get a list of all products",
-            tags = {"product", "post"})
+            tags = {"product", "get"})
     @ApiResponses(
             value = {
             @ApiResponse(responseCode = "200", description = "List of products")
@@ -74,8 +74,7 @@ public class ProductController {
         List<FakeAPIProductsResponse> response = fakeAPIClient.getProductsData();
         logger.info("Getting the list of products. Response: {}", response);
         return ResponseEntity.ok(Collections.singletonList(response));
-    }
 
-//    public ResponseEntity<?>
+    }
 
 }

@@ -11,7 +11,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Collections;
 import java.util.List;
 
 @Tag(name = "User Api", description = "This service is responsible for managing users.")
@@ -33,7 +33,6 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping(consumes="application/json")
     @Operation(
             summary = "Register a new user",
             tags = {"user", "post"})
@@ -43,16 +42,17 @@ public class UserController {
 //            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
 //            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})
             })
+    @PostMapping(consumes="application/json")
     public ResponseEntity<User> saveUser(@RequestBody @Valid NewUserDTO newUser) {
 
         User user = userService.save(newUser);
+        logger.info("Saving a new user. Response: {}", newUser);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
                         .buildAndExpand(user.getId()).toUri();
         return ResponseEntity.created(uri).body(user);
 
     }
 
-    @GetMapping("/list")
     @Operation(
             summary = "Get a list of all users",
             tags = {"user", "get"})
@@ -62,9 +62,12 @@ public class UserController {
 //            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
 //            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})
             })
-    public ResponseEntity<List<User>> listAllUsers() {
+    @GetMapping("/list")
+    public ResponseEntity<List<List<User>>> listAllUsers() {
 
-        return new ResponseEntity<>(userService.getAll(), HttpStatus.OK);
+        List<User> response = userService.getAll();
+        logger.info("Getting the list of users. Response: {}", response);
+        return ResponseEntity.ok(Collections.singletonList(response));
 
     }
 
