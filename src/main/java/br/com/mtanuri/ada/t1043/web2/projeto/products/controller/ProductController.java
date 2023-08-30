@@ -39,8 +39,7 @@ public class ProductController {
     private final ProductService productService;
 
     @Operation(
-            summary = "Add a new product",
-            tags = {"product", "post"})
+            summary = "Add a new product")
     @ApiResponses(
             value = {
                     @ApiResponse(responseCode = "201", description = "Add new product")
@@ -60,8 +59,7 @@ public class ProductController {
 
     // TODO fix get methods exposed to swagger configuration
     @Operation(
-            summary = "Get a list of all products",
-            tags = {"product", "get"})
+            summary = "Get a list of all products")
     @ApiResponses(
             value = {
             @ApiResponse(responseCode = "200", description = "List of products")

@@ -34,8 +34,7 @@ public class UserController {
     private final UserService userService;
 
     @Operation(
-            summary = "Register a new user",
-            tags = {"user", "post"})
+            summary = "Register a new user")
     @ApiResponses(
             value = {
                     @ApiResponse(responseCode = "201", description = "Registration of new users")
@@ -54,8 +53,7 @@ public class UserController {
     }
 
     @Operation(
-            summary = "Get a list of all users",
-            tags = {"user", "get"})
+            summary = "Get a list of all users")
     @ApiResponses(
             value = {
                     @ApiResponse(responseCode = "200", description = "List of all registered users")
